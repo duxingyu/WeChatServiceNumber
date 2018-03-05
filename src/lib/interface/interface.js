@@ -791,3 +791,18 @@ export async function receiveGift(data) { //课程介绍
         })
     })
 }
+
+export function getOtherPage(url) {
+    return new Promise((resolve, reject) => {
+        axios({
+                method: 'get',
+                url: url,
+            })
+            .then((response) => {
+                resolve(response)
+            }).catch((error) => {
+                logoutMessage("网络错误")
+                console.log(error)
+            });
+    })
+}

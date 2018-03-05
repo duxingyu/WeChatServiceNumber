@@ -34,9 +34,10 @@ import CourseList from "@pages/courseintr/CourseList"
 import CourseDetail from "@pages/courseintr/CourseDetail"
 //礼品
 import Gift from "@pages/gift/Gift"
+//亲子阅读
+import ParentChildReading from "@pages/ParentChildReading/Index"
+import Probation from "@pages/ParentChildReading/Probation"
 
-//调试
-import TopTabs from '@components/shop/TopTabs'
 const router = new Router({
     routes: [
         //商城
@@ -259,6 +260,22 @@ const router = new Router({
                 next()
             }
         },
+        // 亲子阅读
+        {
+            path: "/reading",
+            component: ParentChildReading,
+            beforeEnter(to, from, next) {
+                document.title = "亲子阅读"
+                next()
+            },
+            children: [
+                //
+                {
+                    path: "/",
+                    component: Probation
+                }
+            ]
+        }
     ]
 })
 
