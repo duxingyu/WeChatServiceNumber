@@ -28,8 +28,8 @@ function request(data) {
         }).catch((error) => {
             loadingImage()
             logoutMessage("网络错误")
-            data.error(error)
             console.log(error)
+            data.error ? data.error(error) : ""
         });
 }
 
@@ -207,7 +207,7 @@ export async function buyKernel(data) { //购买套餐
     })
 }
 
-export function callWxJsPay(pay_param) { //检查是否在微信内
+export function callWxJsPay(pay_param, success) { //检查是否在微信内
     if (typeof WeixinJSBridge == "undefined") {
         logoutMessage("请用微信打开")
         if (document.addEventListener) {
@@ -217,11 +217,11 @@ export function callWxJsPay(pay_param) { //检查是否在微信内
             document.attachEvent('onWeixinJSBridgeReady', wxPay);
         }
     } else {
-        wxPay(pay_param);
+        wxPay(pay_param, success);
     }
 }
 
-function wxPay(pay_param) { //调用微信支付
+function wxPay(pay_param, success) { //调用微信支付
     var pay_param_arr = eval("(" + pay_param + ")");
     WeixinJSBridge.invoke(
         'getBrandWCPayRequest', {
@@ -234,7 +234,7 @@ function wxPay(pay_param) { //调用微信支付
         },
         function(res) {
             if (res.err_msg == "get_brand_wcpay_request:ok") {
-
+                success ? success() : ""
             } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
                 logoutMessage("取消了支付");
             } else if (res.err_msg == "get_brand_wcpay_request:fail") {
@@ -792,17 +792,52 @@ export async function receiveGift(data) { //课程介绍
     })
 }
 
-export function getOtherPage(url) {
+export async function getUserPayInfo(data) { //课程介绍
+    let options = CopyObject(requestOptions)
+    options["clazzType"] = data.clazzType
+    options["uid"] = data.uid
+    options["token"] = data.token
     return new Promise((resolve, reject) => {
-        axios({
-                method: 'get',
-                url: url,
-            })
-            .then((response) => {
-                resolve(response)
-            }).catch((error) => {
-                logoutMessage("网络错误")
-                console.log(error)
-            });
+        request({
+            type: "post",
+            url: requestUserUrl.userPayInfo,
+            data: options,
+            success(data) {
+                if (data.result == 1) {
+                    resolve(data)
+                    return
+                } else {
+                    logoutMessage(data.description)
+                    console.log(data.description)
+                }
+                loadingImage()
+            }
+        })
+    })
+}
+
+export async function getReadListByWeek(data) { //课程介绍
+    let options = CopyObject(requestOptions)
+    options["clazzType"] = data.clazzType
+    options["uid"] = data.uid
+    options["token"] = data.token
+    options["year"] = data.year
+    options["week"] = data.week
+    return new Promise((resolve, reject) => {
+        request({
+            type: "post",
+            url: requestUserUrl.readListByWeek,
+            data: options,
+            success(data) {
+                if (data.result == 1) {
+                    resolve(data)
+                    return
+                } else {
+                    logoutMessage(data.description)
+                    console.log(data.description)
+                }
+                loadingImage()
+            }
+        })
     })
 }

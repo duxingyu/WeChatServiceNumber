@@ -39,10 +39,14 @@ export let url = {
 
             unclaimedGiftList: this.domain + '/myt_group_buy/giftAction_getUnclaimedGiftList.do',
             receiveGift: this.domain + '/myt_group_buy/giftAction_receiveGift.do',
+
+            userPayInfo: this.domain + '/myt_wx/wxReadAction_getUserPayInfo.do',
+            readListByWeek: this.domain + '/myt_wx/wxReadAction_getReadListByWeek.do',
+            readListByWeek: this.domain + '/myt_wx/wxReadAction_getReadListByWeek.do',
         }
     },
     pay() {
-        // return this.domain + '/myt_pay/payAction_buyKernel.do'
+        //return this.domain + '/myt_pay/payAction_buyKernel.do'
         return 'http://pay.mytian.com.cn/myt_pay/payAction_buyKernel.do'
     }
 }

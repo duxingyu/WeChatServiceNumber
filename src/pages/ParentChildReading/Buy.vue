@@ -1,0 +1,91 @@
+<template>
+    <div id="reading-buy">
+        <img v-for="itme in images" :src="itme" alt="">
+        <div class="bottom" @click="buy">
+            <img :src="images[7]" alt="">
+            <div class="price">
+                预售价: ￥ <span>99</span>
+            </div>
+        </div>
+        <Loading type="1" v-if="loadingShow"></Loading>
+    </div>
+</template>
+
+<script>
+    import Loading from "@components/Loading"
+
+    import { mapState } from "vuex"
+    import { buyKernel } from '@interface'
+    import { callWxJsPay } from '@interface'
+    import { logoutMessage } from '@common'
+
+    export default {
+        components:{
+            Loading
+        },
+        data(){
+            return{
+                loadingShow:false
+            }
+        },
+        computed:{
+            ...mapState(["userOpenId","user"]),
+            images(){
+                return [
+                    require("@image/ParentChildReading/details01.png"),
+                    require("@image/ParentChildReading/details02.png"),
+                    require("@image/ParentChildReading/details03.png"),
+                    require("@image/ParentChildReading/details04.png"),
+                    require("@image/ParentChildReading/details05.png"),
+                    require("@image/ParentChildReading/details06.png"),                   
+                    require("@image/ParentChildReading/details07.png"),
+                    require("@image/ParentChildReading/buy.png")
+                ]
+            }
+        },
+        methods:{
+            buy(){
+                this.loadingShow = true
+                buyKernel({
+                    openId:this.userOpenId,
+                    uid:this.user.uid, 
+                    token:this.user.token, 
+                    kernelId:"ycys", 
+                }).then(res =>{
+                    this.loadingShow = false
+                    if (res.result == 1) {
+                        callWxJsPay(res.orderInfo,() =>{
+                            this.$router.push({path: "/reading/push"})
+                        })
+                    } else if (res.result == -1) {
+                        logoutMessage('被登出请<br/>重新进入')
+                    } else {
+                        logoutMessage(res.description)
+                    }
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+@import '../../assets/css/main.less';
+#reading-buy{
+    .bottom{
+        position: fixed;
+        width: 100%;
+        bottom:0%;
+        .price{
+            position: absolute;
+            bottom: 5%;
+            right: 45%;
+            color:@red;
+            font-size: 12px;
+            font-size: 3.2vw;
+            span{
+                font-size: 20px;
+            }
+        }
+    }
+}
+</style>

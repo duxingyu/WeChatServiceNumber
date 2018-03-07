@@ -37,6 +37,9 @@ import Gift from "@pages/gift/Gift"
 //亲子阅读
 import ParentChildReading from "@pages/ParentChildReading/Index"
 import Probation from "@pages/ParentChildReading/Probation"
+import ReadingPush from "@pages/ParentChildReading/ReadingPush"
+import ReadingBuy from "@pages/ParentChildReading/Buy"
+import ReadingSharePage from "@pages/ParentChildReading/SharePage"
 
 const router = new Router({
     routes: [
@@ -273,8 +276,25 @@ const router = new Router({
                 {
                     path: "/",
                     component: Probation
-                }
+                },
+                {
+                    path: "push",
+                    component: ReadingPush
+                },
+                {
+                    path: "buy",
+                    component: ReadingBuy
+                },
             ]
+        },
+        // 亲子阅读分享
+        {
+            path: "/reading-share",
+            component: ReadingSharePage,
+            beforeEnter(to, from, next) {
+                document.title = "亲子阅读分享"
+                next()
+            },
         }
     ]
 })

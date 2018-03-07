@@ -1,7 +1,7 @@
 <template>
-    <div class="reading-class">
+    <div class="reading-class" @click="toRead">
         <div class="cover">
-            <img :src="images[0]" alt="">
+            <img :src="data.coverUrl" alt="">
         </div>
         <div class="text">
             <div class="text-a">
@@ -14,16 +14,17 @@
                 今日亲子阅读内容
             </div>
             <div class="text-d">
-                第01期:我就爱说我不
+                第{{data.clazzIndex}}/65期: {{data.readContent}}
             </div>
         </div>
-        <img class="status" :src="status[0]" alt="">
+        <img class="status" :src="status[data.readStatus]" alt="">
         <img class="icon-right" :src="images[1]" alt="">
     </div>
 </template>
 
 <script>
     export default {
+        props:["data"],
         computed:{
             images(){
                 return [
@@ -33,10 +34,16 @@
             },
             status(){
                 return[
-                    require("@image/ParentChildReading/ic_reading.png"),
                     require("@image/ParentChildReading/ic_complete_no.png"),
+                    require("@image/ParentChildReading/ic_reading.png"),
                     require("@image/ParentChildReading/ic_supplementary_reading.png"),
                 ]
+            }
+        },
+        methods:{
+            toRead(){
+                console.log(this.data.readUrl)
+                location.href = this.data.readUrl
             }
         }
     }
@@ -46,7 +53,7 @@
 @import '../../assets/css/main.less';
 .reading-class{
     width: 95%;
-    margin: 10px auto 5px;
+    margin: 10px auto 0px;
     padding: 1px;
     border-radius: 8px;
     overflow: hidden;

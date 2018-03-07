@@ -4,8 +4,8 @@
         <div class="tip">
             <img :src="images[1]" alt="">
         </div>
-        <ClassItem></ClassItem>
-        <WhisperItme></WhisperItme>
+        <ClassItem :data="content"></ClassItem>
+        <WhisperItme :data="content"></WhisperItme>
     </div>
 </template>
 
@@ -23,7 +23,31 @@
                     require("@image/ParentChildReading/pic_banner.png"),
                     require("@image/ParentChildReading/pic_txt.png"),
                 ]
-            }
+            },
+            content(){
+                return{
+                    "readStatus":0,
+                    "readTitle":"{内测}麦田亲子阅读— “用心还原孩子的世界” （儿童成长敏感叛逆期）",
+                    "expertId":1,
+                    "expertName":"小付",
+                    "expertReadStatus":0,
+                    "readContent":"不想吃饭",
+                    "clazzIndex":3,
+                    "readWordsCount":231,
+                    "coverUrl":"http://mytianimg.oss-cn-shanghai.aliyuncs.com/1520406286341.png",
+                    "expertImgUrl":"http://mytianimg.oss-cn-shanghai.aliyuncs.com/1520417361507.png",
+                    "readIsFree":1,
+                    "clazzType":"YC",
+                    "expertHonor":"教授",
+                    "whisperContent":"专家内容解读",
+                    "expertTitle":"麦田首席测试",
+                    "whisperUrl":"http://www.mytian.com.cn/myhtml/parents_whisper/lesson3_free/index.html",
+                    "clazzId":31003,
+                    "expertRemark":"test",
+                    "whisperTitle":"悄悄话",
+                    "time":"",
+                    "readUrl":"http://www.mytian.com.cn/myhtml/readbook/lesson3_free/index.html"}
+                }
         }
     }
 </script>

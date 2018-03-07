@@ -119,7 +119,9 @@
                 }).then(res =>{
                     this.loadingShow = false
                     if (res.result == 1) {
-                        callWxJsPay(res.orderInfo)
+                        callWxJsPay(res.orderInfo, () =>{
+                            this.$router.go(-1)
+                        })
                     } else if (res.result == -1) {
                         logoutMessage('被登出请<br/>重新进入')
                     } else {

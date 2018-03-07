@@ -1,14 +1,14 @@
 <template>
-    <div class="reading-class">
+    <div class="reading-class" @click="toWhisper">
         <div class="cover">
-            <img :src="images[0]" alt="">
+            <img :src="data.expertImgUrl" alt="">
         </div>
         <div class="text">
             <div class="text-c">  
                 1对1父母悄悄话
             </div>
             <div class="text-d">
-                第01期:我就爱说我不
+                第{{data.clazzIndex}}/65期: {{data.whisperContent}}
             </div>
         </div>
         <img class="status" :src="status[0]" alt="">
@@ -18,6 +18,7 @@
 
 <script>
     export default {
+        props:["data"],
         computed:{
             images(){
                 return [
@@ -27,10 +28,15 @@
             },
             status(){
                 return[
-                    require("@image/ParentChildReading/ic_reading.png"),
                     require("@image/ParentChildReading/ic_complete_no.png"),
+                    require("@image/ParentChildReading/ic_reading.png"),
                     require("@image/ParentChildReading/ic_supplementary_reading.png"),
                 ]
+            }
+        },
+        methods:{
+            toWhisper(){
+                location.href = this.data.whisperUrl
             }
         }
     }
@@ -40,7 +46,7 @@
 @import '../../assets/css/main.less';
 .reading-class{
     width: 95%;
-    margin: 10px auto 5px;
+    margin: 10px auto 0px;
     padding: 1px;
     border-radius: 8px;
     overflow: hidden;

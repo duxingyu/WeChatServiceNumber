@@ -1,17 +1,348 @@
 <template>
-    <div>
-        
+    <div id="reading-push" :style="wH">
+        <div class="banner">
+            <img :src="images[0]" alt="">
+            <img class="touxiang" :src="images[2]" alt="">
+        </div>
+        <div class="status">
+            <img :src="images[1]" alt="">
+        </div>
+        <div v-if="currentPush">
+            <div class="time">
+                <div class="left">
+                    {{getXQ(currentPush.time)}}
+                </div>
+                <div class="right">
+                    <span>亲子陪伴阅读第{{accompanyDays}}天</span>
+                </div>
+            </div>
+            <ClassItem :data="currentPush"></ClassItem>
+            <WhisperItme :data="currentPush"></WhisperItme>
+        </div>
+        <div class="tips" v-if="!currentPush">
+            未推送阅读内容
+        </div>
+        <div class="time-select"  v-if="isBuy">
+            <div class="icon icon-left" @click="toLeft">
+                <img :src="images[3]" alt="">
+            </div>
+            <div  v-for="(item,index) in days" 
+            :class="{'day-item':true,'day-item-select':(index == currnetIndex)}"
+            @click="selectIndex(index)">
+                {{item.month + "/" + item.day}}
+            </div>
+            <div class="icon icon-right" @click="toRight">
+                <img :src="images[3]" alt="">
+            </div>
+        </div>
+        <Loading type="1" v-if="loadingShow"></Loading>
     </div>
 </template>
 
 <script>
-    export default {
+    import ClassItem from "@components/ParentChildReading/ClassItem"
+    import WhisperItme from "@components/ParentChildReading/WhisperItme"
+    import Loading from "@components/Loading"
+
+    import { getUserPayInfo } from "@interface"
+    import { getReadListByWeek } from "@interface"
+    import { parseTime } from "@common"
+    import { mapState } from "vuex"
     
+    export default {
+        components:{
+            ClassItem,WhisperItme,Loading
+        },
+        data(){
+            return{
+                initCount:0,
+                loadingShow:false,
+                isBuy:false,
+                days:[],
+                currnetIndex:0,
+                pushList:[],
+                currentPush:null,
+                week:0,
+                maxWeek:0,
+                year:2018,
+                accompanyDays:0
+            }
+        },
+        computed:{
+            ...mapState(["user"]),
+            images(){
+                return [
+                    require("@image/ParentChildReading/pic_banner.png"),
+                    require("@image/ParentChildReading/pic_reading_status.png"),
+                    require("@image/shop/touxiang01.png"),
+                    require("@image/ParentChildReading/ic_enter.png"),                    
+                ]
+            },
+            wH(){
+                return "minHeight:" + window.innerHeight + "px;"
+            }
+        },
+        methods:{
+            getWeek(date){
+                var date2 = new Date(date.getFullYear(), 0, 1);  
+                var day1 = date.getDay();  
+                if(day1 == 0){
+                    day1 = 7;
+                }   
+                var day2 = date2.getDay();  
+                if(day2 == 0){
+                    day2=7;  
+                } 
+                let d = Math.round((date.getTime() - date2.getTime()+(day2-day1)*(24*60*60*1000)) / 86400000);    
+                return Math.ceil(d / 7) 
+            },
+            getMaxWeek(year){
+                let d1 = new Date(year, 0, 1)
+                let day1 = d1.getDay()
+                d1 = new Date(year, 0, (7 - day1) + 1)
+
+                let d2 = new Date(year, 11, 31)
+                return Math.floor((d2 - d1) / (1000 * 60 * 60 * 24 * 7)) + 1
+            },
+            getXQ(time){
+                let d = new Date(time)
+                let q = d.getDay()
+                switch(q){
+                    case 0:
+                        q = "星期日";
+                    break;
+                    case 1:
+                        q = "星期一";
+                    break;
+                    case 2:
+                        q = "星期二";
+                    break;
+                    case 3:
+                        q = "星期三";
+                    break;
+                    case 4:
+                        q = "星期四";
+                    break;
+                    case 5:
+                        q = "星期五";
+                    break;
+                    case 6:
+                        q = "星期六";
+                    break;
+                }
+                return q
+            },
+            parseDays(days){
+                let a = []
+                for(let i = 0; i < days.length; i++){
+                    let obj = {}
+                    let b = days[i].split("-")
+                    obj.year = b[0]
+                    obj.month = b[1]
+                    obj.day = b[2]
+                    a.push(obj)
+                }
+                return a
+            },
+            isInited(){
+                this.initCount++;
+                if(this.initCount >= 2){
+                    this.loadingShow = false
+                    this.initCount = 2
+                }
+            },
+            getUserPayInfo(){
+                this.loadingShow = true
+                let options = {}
+                options.uid = this.user.uid
+                options.token = this.user.token
+                options.clazzType = "YC"
+                getUserPayInfo(options).then(res =>{
+                    this.isInited()
+                    if(res.info.buyNum > 0){
+                        this.isBuy = true
+                    }
+                })
+            },
+            getReadListByWeek(callback){
+                this.loadingShow = true
+                let options = {}
+                options.uid = this.user.uid
+                options.token = this.user.token
+                options.clazzType = "YC"
+                options.year = this.year
+                options.week = this.week
+                getReadListByWeek(options).then(res =>{
+                    this.isInited()
+                    this.days = this.parseDays(res.days)
+                    this.pushList = res.list
+                    this.accompanyDays = res.accompanyDays
+                    callback ? callback(res) : ""
+                })
+            },
+            selectIndex(index){
+                this.currnetIndex = index
+                this.getCurrentPush()
+            },
+            toLeft(){
+                if(this.currnetIndex <= 0){                   
+                    this.week--
+                    if(this.week <= 0){
+                        this.year--
+                        if(this.year <= 2017){
+                            this.week++
+                            this.year++
+                            return
+                        }
+                        this.maxWeek = this.getMaxWeek(this.year)
+                        this.week = this.maxWeek
+                    }
+                    this.currnetIndex = 4
+                    this.getReadListByWeek(() =>{
+                         this.getCurrentPush()
+                    })
+                }else{
+                    this.currnetIndex--
+                    this.getCurrentPush()
+                }
+            },
+            toRight(){
+                if(this.currnetIndex >= 4){
+                    this.week++
+                    if(this.week > this.maxWeek){
+                        this.year++
+                        this.maxWeek = this.getMaxWeek(this.year)
+                        this.week=1
+                    }
+                    this.currnetIndex = 0
+                    this.getReadListByWeek(() =>{
+                        this.getCurrentPush()
+                    })
+                }else{
+                    this.currnetIndex++
+                    this.getCurrentPush()
+                }
+            },
+            getCurrentPush(){
+                let days = this.days[this.currnetIndex]
+                let day = days.year + "-" +  days.month + "-" + days.day
+                for(let i = 0; i < this.pushList.length; i++){
+                   if(this.pushList[i].time == day){
+                        this.currentPush =  this.pushList[i]
+                        return 
+                    }
+                }
+                this.currentPush =  null
+            }
+        },
+        beforeMount(){
+            this.year = new Date().getFullYear()
+            this.week = this.getWeek(new Date())
+            this.maxWeek = this.getMaxWeek(this.year)
+            if(this.week > this.maxWeek){
+                this.year++
+                this.week = 1
+                this.maxWeek = this.getMaxWeek(this.year)
+            }
+            let today = parseTime(new Date(), true).split(" ")[0]
+
+            localStorage.wxUserInfo = JSON.stringify(this.user)
+
+            this.getUserPayInfo()
+            this.getReadListByWeek((res) =>{
+                for(let i = 0; i < res.days.length; i++){
+                    if(res.days[i] == today){
+                        this.currnetIndex = i
+                    }
+                }
+                this.getCurrentPush()
+            })
+        }
     }
 </script>
 
 <style lang="less" scoped>
-
+@import '../../assets/css/main.less';
+#reading-push{
+    background: #f6f6f6;
+    box-sizing: border-box;
+    padding-bottom: 54px;
+    .banner{
+        position: relative;
+       .touxiang{
+            position: absolute;
+            width: 17%;
+            bottom: 7%;
+            left: 50%;
+            transform: translateX(-50%)
+       } 
+    }
+    .status{
+        background: #fff;
+        padding: 12px 0;
+        img{
+            width: 95%;
+            margin: 0 auto;
+        }
+    }
+    .time{
+        padding:15px 2.5% 5px;
+        display: flex;
+        justify-content: space-between; 
+        color:@darkerGray;
+        .right{
+            display: flex;
+            align-items: center;
+            i{
+                display: inline-block;
+                height: 70%;
+                width: 1px;
+                background: @darkOrange;
+                margin:0 5px;
+            }
+        }
+    }
+    .tips{
+        text-align: center;
+        padding: 20px 0;
+        color:@darkerGray;
+    }
+    .time-select{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background: #fff;
+        align-items: center;
+        padding: 15px 0;
+        z-index: 99;
+        &>div{
+            margin: 0 2%;
+        }
+        .icon{
+            width: 4%;
+        }
+        .icon-left{
+            transform: rotate(180deg)
+        }
+        .day-item{
+            display: inline-block;
+            color:@darkOrange;
+            width: 50px;
+            height: 22px;
+            text-align: center;
+            line-height: 22px;
+            border: 1px solid @darkOrange;
+            border-radius: 4px;
+        }
+        .day-item-select{
+            border: 1px solid @darkOrange;
+            background: @darkOrange;
+            color:#fff;
+        }
+    }
+}
 </style>
 
 
