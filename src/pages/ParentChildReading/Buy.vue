@@ -4,7 +4,7 @@
         <div class="bottom" @click="buy">
             <img :src="images[7]" alt="">
             <div class="price">
-                预售价: ￥ <span>99</span>
+                {{title}}: ￥ <span>{{price / 100}}</span>
             </div>
         </div>
         <Loading type="1" v-if="loadingShow"></Loading>
@@ -17,6 +17,7 @@
     import { mapState } from "vuex"
     import { buyKernel } from '@interface'
     import { callWxJsPay } from '@interface'
+    import { getWxReadGoodList } from '@interface'
     import { logoutMessage } from '@common'
 
     export default {
@@ -25,7 +26,10 @@
         },
         data(){
             return{
-                loadingShow:false
+                loadingShow:false,
+                title:"",
+                goodId:"",
+                price:0
             }
         },
         computed:{
@@ -50,12 +54,12 @@
                     openId:this.userOpenId,
                     uid:this.user.uid, 
                     token:this.user.token, 
-                    kernelId:"ycys", 
+                    kernelId:this.goodId, 
                 }).then(res =>{
                     this.loadingShow = false
                     if (res.result == 1) {
                         callWxJsPay(res.orderInfo,() =>{
-                            this.$router.push({path: "/reading/push"})
+                            this.$router.replace({path: "/reading/push"})
                         })
                     } else if (res.result == -1) {
                         logoutMessage('被登出请<br/>重新进入')
@@ -64,6 +68,15 @@
                     }
                 })
             }
+        },
+        beforeMount(){
+            this.loadingShow = true
+            getWxReadGoodList().then(res =>{
+                this.loadingShow = false
+                this.title = res.list[0].title
+                this.goodId = res.list[0].goodId
+                this.price = res.list[0].price
+            })
         }
     }
 </script>
@@ -78,7 +91,7 @@
         .price{
             position: absolute;
             bottom: 5%;
-            right: 45%;
+            left: 28%;
             color:@red;
             font-size: 12px;
             font-size: 3.2vw;

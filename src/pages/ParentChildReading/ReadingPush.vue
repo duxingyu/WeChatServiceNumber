@@ -10,7 +10,7 @@
         <div v-if="currentPush">
             <div class="time">
                 <div class="left">
-                    {{getXQ(currentPush.time)}}
+                    {{days[currnetIndex].month}}月{{days[currnetIndex].day}},{{getXQ(currentPush.time)}}
                 </div>
                 <div class="right">
                     <span>亲子陪伴阅读第{{accompanyDays}}天</span>
@@ -159,7 +159,7 @@
                 options.clazzType = "YC"
                 getUserPayInfo(options).then(res =>{
                     this.isInited()
-                    if(res.info.buyNum > 0){
+                    if(res.info && res.info.buyNum > 0){
                         this.isBuy = true
                     }
                 })
@@ -245,8 +245,6 @@
                 this.maxWeek = this.getMaxWeek(this.year)
             }
             let today = parseTime(new Date(), true).split(" ")[0]
-
-            localStorage.wxUserInfo = JSON.stringify(this.user)
 
             this.getUserPayInfo()
             this.getReadListByWeek((res) =>{

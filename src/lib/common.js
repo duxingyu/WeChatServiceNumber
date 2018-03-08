@@ -205,14 +205,13 @@ export function wxShareOptions(options) {
             // 触发时需要做的事...
         },
         success: function() {
-            // alert('分享到朋友圈成功');  
+            // alert('分享到朋友圈成功'); 
         },
         cancel: function() {
             // alert('你没有分享到朋友圈');  
         },
         fail: function(res) {
             //这里必须写，可以再非微信端弹出错误信息，方便调试
-            alert(JSON.stringify(res));
         }
     });
     wx.onMenuShareAppMessage({
@@ -231,7 +230,6 @@ export function wxShareOptions(options) {
         },
         fail: function(res) {
             //这里必须写，可以再非微信端弹出错误信息，方便调试
-            alert(JSON.stringify(res));
         }
     });
 }

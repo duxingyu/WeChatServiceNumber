@@ -14,7 +14,7 @@
                 今日亲子阅读内容
             </div>
             <div class="text-d">
-                第{{data.clazzIndex}}/65期: {{data.readContent}}
+               <span v-if="!data.readIsFree"> 第{{data.clazzIndex}}/65期，</span>{{data.readContent}}
             </div>
         </div>
         <img class="status" :src="status[data.readStatus]" alt="">
@@ -76,6 +76,9 @@
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 13px;
+        }
+        .text-a{
+            font-weight: bold;
         }
         .text-c{
             color:@darkOrange;

@@ -2,16 +2,16 @@
     <div id="share-page" :style="style">
         <div class="touxiang">
             <img :src="images[0]" alt="">
-            <img class="img-touxiang" :src="images[1]" alt="">
+            <img class="img-touxiang" :src="userImg?userImg:images[1]" alt="">
         </div>
         <div class="info">
             <img :src="images[2]" alt="">
-            <div class="name">麦麦</div>
+            <div class="name">{{alias?alias:"麦麦"}}</div>
             <div class="days">
-                66 <span>天</span>
+                {{time}} <span>天</span>
             </div>
             <div class="words">
-                80 <span>次</span>
+                {{words}} <span>字</span>
             </div>
         </div>
         <div class="proposal">
@@ -26,8 +26,8 @@
         </div>
         <div class="qrcode">
             <div class="des">
-                <div>长按识别二维码</div>
-                <p>麦田亲子互动</p>
+                <div>长按二维码图片</div>
+                <p>参与麦田亲子互动</p>
             </div>
             <div class="code">
                 <img :src="images[3]" alt="">
@@ -37,7 +37,17 @@
 </template>
 
 <script>
+    import { getShareUserReadInfo } from "@interface"
+
     export default {
+        data(){
+            return {
+                userImg:"",
+                alias:"麦麦",
+                words:0,
+                time:0,
+            }
+        },
         computed:{
             images(){
                 return[
@@ -50,6 +60,20 @@
             style(){
                 return "height:" + window.innerHeight + "px;"
             },
+        },
+        beforeMount(){
+            let uid = this.$route.query.uid
+            if(uid){
+                getShareUserReadInfo(uid).then(res =>{
+                    console.log(res)
+                    this.userImg = res.info.userImg
+                    this.alias = res.info.alias
+                    this.words = res.info.words
+                    this.time = res.info.time
+                })
+            }else{
+                alert("分享链接错误!")
+            }
         }
     }
 </script>
@@ -73,6 +97,7 @@
             width: 18%;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 100px;
         }
     }
     .info{
@@ -85,7 +110,7 @@
         .name{
             position: absolute;
             left: 50%;
-            top: 5%;
+            top: 6.5%;
             transform: translate(-50%, -50%);
             font-size: 14px;
             width: 20%;

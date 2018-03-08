@@ -59,7 +59,7 @@ export async function getWxShareOptions(callbak) { //获取微信分享配置
                     let obj = data.info
                     let wx = require('weixin-js-sdk')
                     wx.config({
-                        //debug: true, 
+                        // debug: true,
                         appId: obj.appId,
                         timestamp: obj.timestamp,
                         nonceStr: obj.noncestr,
@@ -816,7 +816,7 @@ export async function getUserPayInfo(data) { //课程介绍
     })
 }
 
-export async function getReadListByWeek(data) { //课程介绍
+export async function getReadListByWeek(data) { //亲子阅读推送
     let options = CopyObject(requestOptions)
     options["clazzType"] = data.clazzType
     options["uid"] = data.uid
@@ -827,6 +827,49 @@ export async function getReadListByWeek(data) { //课程介绍
         request({
             type: "post",
             url: requestUserUrl.readListByWeek,
+            data: options,
+            success(data) {
+                if (data.result == 1) {
+                    resolve(data)
+                    return
+                } else {
+                    logoutMessage(data.description)
+                    console.log(data.description)
+                }
+                loadingImage()
+            }
+        })
+    })
+}
+
+export async function getShareUserReadInfo(uid) { //亲子阅读推送
+    let options = CopyObject(requestOptions)
+    options["uid"] = uid
+    return new Promise((resolve, reject) => {
+        request({
+            type: "post",
+            url: requestUserUrl.shareUserReadInfo,
+            data: options,
+            success(data) {
+                if (data.result == 1) {
+                    resolve(data)
+                    return
+                } else {
+                    logoutMessage(data.description)
+                    console.log(data.description)
+                }
+                loadingImage()
+            }
+        })
+    })
+}
+
+export async function getWxReadGoodList() { //亲子阅读推送
+    let options = CopyObject(requestOptions)
+    return new Promise((resolve, reject) => {
+        request({
+            type: "post",
+            url: requestUserUrl.wxReadGoodList,
             data: options,
             success(data) {
                 if (data.result == 1) {

@@ -5,10 +5,10 @@
         </div>
         <div class="text">
             <div class="text-c">  
-                1对1父母悄悄话
+                5分钟父母悄悄话
             </div>
             <div class="text-d">
-                第{{data.clazzIndex}}/65期: {{data.whisperContent}}
+                <span v-if="!data.readIsFree"> 第{{data.clazzIndex}}/65期 </span>{{data.whisperContent}}
             </div>
         </div>
         <img class="status" :src="status[0]" alt="">

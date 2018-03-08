@@ -12,6 +12,8 @@
 <script>
     import ClassItem from "@components/ParentChildReading/ClassItem"
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
+
+    import { wxShareOptions } from "@common"
       
     export default {
         components:{
@@ -48,6 +50,14 @@
                     "time":"",
                     "readUrl":"http://www.mytian.com.cn/myhtml/readbook/lesson3_free/index.html"}
                 }
+        },
+        beforeMount(){
+            wxShareOptions({
+                title: "麦田亲子阅读",
+                link: "http://promotion.mytian.com.cn/myt_promotion/center/center_splash.html?returnTo=reading-free",
+                imgUrl: "http://www.mytian.com.cn/myhtml/readbook/images/logo.png",
+                desc: "用心还原孩子的世界",
+            })
         }
     }
 </script>
