@@ -1,13 +1,13 @@
 <template>
     <div id='my'>
         <div class="info">
-            <img src="../../assets/images/shop/touxiang01.png">
-            <div class="num" @click="ToEdit">
+            <img :src="user.wxHeadImg?user.wxHeadImg:'../../assets/images/shop/touxiang01.png'">
+            <div class="num">
                 <div class="alias">
-                    <span>{{user.alias ? user.alias : '麦宝'}}</span>
-                    <div class="edit" v-if="user.isLogin">
+                    <span>{{user.wxAlias ? user.wxAlias : '麦麦'}}</span>
+                    <!-- <div class="edit" v-if="user.isLogin">
                         <img src="../../assets/images/shop/my_edit.png" alt="">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="ANum" v-if="user.phone">
                     <span>{{user.phone}}</span>
@@ -57,14 +57,14 @@
                     })
                 }
             },
-            ToEdit(){
-                if(!this.user.isLogin){
-                    return false
-                }
-                location.href = 
-                    "http://www.mytian.com.cn/myt_activity/activityCenter/#/center/info?openId=" +
-                    this.userOpenId
-            },
+            // ToEdit(){
+            //     if(!this.user.isLogin){
+            //         return false
+            //     }
+            //     location.href = 
+            //         "http://www.mytian.com.cn/myt_activity/activityCenter/#/center/info?openId=" +
+            //         this.userOpenId
+            // },
             toAddress() {
                 this.isLogin().then(res =>{
                     this.$router.push({
@@ -95,6 +95,7 @@
             img {
                 width: 20%;
                 margin-right: 5px;
+                border-radius: 1000px;
             }
             .bind {
                 position: absolute;

@@ -32,6 +32,8 @@ let state = {
         token: '',
         name: '',
         birthday: '',
+        wxAlias: "",
+        wxHeadImg: "",
         address: {}
     },
     //商品

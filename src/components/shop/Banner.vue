@@ -21,7 +21,7 @@
           autoplay: 4000,
           autoplayDisableOnInteraction:false,
           loop:true,
-          pagination : '.swiper-pagination',
+          // pagination : '.swiper-pagination',
         }
       }
     },

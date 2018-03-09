@@ -56,6 +56,8 @@
               phone: res.baby.phone,
               alias: res.baby.alias,
               birthday: res.baby.birthday,
+              wxAlias:res.baby.alias,
+              wxHeadImg:res.wxUserInfo.headImg,
               address: res.address
             });
           }

@@ -1,8 +1,8 @@
 <template>
     <div id="reading-push" :style="wH">
         <div class="banner">
-            <img :src="images[0]" alt="">
-            <img class="touxiang" :src="images[2]" alt="">
+            <Banner :images="banners"></Banner>
+            <img class="touxiang" :src="user.wxHeadImg?user.wxHeadImg:images[2]" alt="">
         </div>
         <div class="status">
             <img :src="images[1]" alt="">
@@ -43,6 +43,7 @@
     import ClassItem from "@components/ParentChildReading/ClassItem"
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
     import Loading from "@components/Loading"
+    import Banner from '@components/shop/Banner'
 
     import { getUserPayInfo } from "@interface"
     import { getReadListByWeek } from "@interface"
@@ -51,7 +52,7 @@
     
     export default {
         components:{
-            ClassItem,WhisperItme,Loading
+            ClassItem,WhisperItme,Loading,Banner
         },
         data(){
             return{
@@ -74,12 +75,21 @@
                 return [
                     require("@image/ParentChildReading/pic_banner.png"),
                     require("@image/ParentChildReading/pic_reading_status.png"),
-                    require("@image/shop/touxiang01.png"),
+                    "http://www.mytian.com.cn/myhtml/parents_whisper/images/md.png",
                     require("@image/ParentChildReading/ic_enter.png"),                    
                 ]
             },
             wH(){
                 return "minHeight:" + window.innerHeight + "px;"
+            },
+            banners(){
+                return [
+                   { src:require("@image/ParentChildReading/banner1.jpg")},
+                   { src:require("@image/ParentChildReading/banner2.jpg")},
+                   { src:require("@image/ParentChildReading/banner3.jpg")},
+                   { src:require("@image/ParentChildReading/banner4.jpg")},
+                   { src:require("@image/ParentChildReading/banner5.jpg")},
+                ]
             }
         },
         methods:{
@@ -93,7 +103,7 @@
                 if(day2 == 0){
                     day2=7;  
                 } 
-                let d = Math.round((date.getTime() - date2.getTime()+(day2-day1)*(24*60*60*1000)) / 86400000);    
+                let d = Math.ceil((date.getTime() - date2.getTime()+(day2-day1)*(24*60*60*1000)) / 86400000);    
                 return Math.ceil(d / 7) 
             },
             getMaxWeek(year){
@@ -269,10 +279,12 @@
         position: relative;
        .touxiang{
             position: absolute;
-            width: 17%;
-            bottom: 7%;
+            width: 13%;
+            bottom: 3%;
             left: 50%;
-            transform: translateX(-50%)
+            transform: translateX(-50%);
+            border-radius: 1000px;
+            z-index: 99;
        } 
     }
     .status{

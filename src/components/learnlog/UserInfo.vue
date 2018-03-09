@@ -2,10 +2,10 @@
     <div class="log-userinfo">
         <div class="userinfo">
             <div class="head">
-                <img :src="headUrl" alt="">
+                <img :src="user.wxHeadImg?user.wxHeadImg:headUrl" alt="">
             </div>
             <div class="birthday">
-                <p>{{user.alias?user.alias:"麦宝"}}</p>
+                <p>{{user.wxAlias?user.wxAlias:"麦宝"}}</p>
                 <span>{{birthday?birthday:"宝宝生日"}}</span>
             </div>
         </div>
@@ -80,6 +80,8 @@ export default {
         .head{
             width:56px;
             margin-right: 10px;
+            border-radius: 1000px;
+            overflow: hidden;
         }
         .birthday{
             p{

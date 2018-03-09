@@ -136,6 +136,8 @@ export default {
                             alias:res.alias,
                             phone:res.phone,
                             birthday:res.birthday,
+                            wxAlias:res.alias,
+                            wxHeadImg:res.wxUserInfo.headImg,
                             address:res.address
                         })
                         this.setBindPageShow(false)
