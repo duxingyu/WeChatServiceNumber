@@ -1,8 +1,8 @@
 <template>
-    <div id="reading-buy">
+    <div id="reading-buy" ref="reading-buy">
         <img v-for="itme in images" :src="itme" alt="">
-        <div class="bottom" @click="buy">
-            <img :src="images[7]" alt="">
+        <div class="bottom" @click="buy" ref="buy-btn">
+            <img :src="btnImage" alt="">
             <div class="price">
                 {{title}}: ￥ <span>{{price / 100}}</span>
             </div>
@@ -43,8 +43,10 @@
                     require("@image/ParentChildReading/details05.png"),
                     require("@image/ParentChildReading/details06.png"),                   
                     require("@image/ParentChildReading/details07.png"),
-                    require("@image/ParentChildReading/buy.png")
                 ]
+            },
+            btnImage(){
+                return  require("@image/ParentChildReading/buy.png")
             }
         },
         methods:{
@@ -73,9 +75,13 @@
             this.loadingShow = true
             getWxReadGoodList().then(res =>{
                 this.loadingShow = false
-                this.title = res.list[0].title
+                this.title = res.list[0].content
                 this.goodId = res.list[0].goodId
                 this.price = res.list[0].price
+            })
+            this.$nextTick((res) =>{
+                let h = this.$refs["buy-btn"].offsetHeight
+                this.$refs["reading-buy"].style.paddingBottom = h + "px"
             })
         }
     }

@@ -137,7 +137,7 @@ export default {
                             phone:res.phone,
                             birthday:res.birthday,
                             wxAlias:res.alias,
-                            wxHeadImg:res.wxUserInfo.headImg,
+                            wxHeadImg:res.wxUserInfo?res.wxUserInfo.headImg:"",
                             address:res.address
                         })
                         this.setBindPageShow(false)

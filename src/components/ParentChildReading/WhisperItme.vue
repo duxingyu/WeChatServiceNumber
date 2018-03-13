@@ -11,7 +11,7 @@
                 <span v-if="!data.readIsFree"> 第{{data.clazzIndex}}/65期 </span>{{data.whisperContent}}
             </div>
         </div>
-        <img class="status" :src="status[0]" alt="">
+        <img v-if="!data.readIsFree" class="status" :src="status[data.expertReadStatus]" alt="">
         <img class="icon-right" :src="images[1]" alt="">
     </div>
 </template>
@@ -62,7 +62,7 @@
         right: 0;
         top: 50%;
         transform: translateY(-50%);
-        width: 55%;
+        width: 54%;
         &>div{
             width: 100%;
             white-space: nowrap;
@@ -73,6 +73,7 @@
         .text-c{
             color:@darkOrange;
             margin:0px 0 5px;
+            font-weight: bold;
         }
         .text-d{
             font-size: 12px;
@@ -81,14 +82,15 @@
     }
     .icon-right{
         position: absolute;
-        bottom: 8%;
-        right: 3%;
-        width: 3.5%;
+        bottom: 50%;
+        transform: translateY(50%);
+        right: 1.5%;
+        width: 3.35%;
     }
     .status{
         position: absolute;
         top: 8%;
-        right: 3%;
+        right: 1.1%;
         width: 5%;
     }
 }

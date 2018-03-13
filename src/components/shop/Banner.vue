@@ -21,7 +21,7 @@
           autoplay: 4000,
           autoplayDisableOnInteraction:false,
           loop:true,
-          // pagination : '.swiper-pagination',
+          pagination : '.swiper-pagination',
         }
       }
     },
@@ -37,6 +37,9 @@
     .swiper-slide img{
         display: block;
         width: 100%;
+    }
+    .swiper-pagination{
+      bottom:0;
     }
 </style>
 

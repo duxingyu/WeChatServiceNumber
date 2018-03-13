@@ -4,21 +4,26 @@
             <img :src="data.coverUrl" alt="">
         </div>
         <div class="text">
-            <div class="text-a">
+            <!-- <div class="text-a">
                 用心还原孩子的世界
+            </div> -->
+            <div class="text-f">
+                <div class="text-b">
+                    65天儿童成长敏感期主题阅读
+                </div>
+                <img v-if="!data.readIsFree" class="status" :src="status[data.readStatus]" alt="">
             </div>
-            <div class="text-b">
-                65天儿童成长敏感期主题阅读
-            </div>
-            <div class="text-c">  
-                今日亲子阅读内容
-            </div>
-            <div class="text-d">
-               <span v-if="!data.readIsFree"> 第{{data.clazzIndex}}/65期，</span>{{data.readContent}}
+            <div class="text-e">
+                <div class="text-c">  
+                    今日亲子阅读内容
+                </div>
+                <div class="text-d">
+                    <span v-if="!data.readIsFree"> 第{{data.clazzIndex}}/65期，</span>{{data.readContent}}
+                </div>
+                <img class="icon-right" :src="images[1]" alt="">
             </div>
         </div>
-        <img class="status" :src="status[data.readStatus]" alt="">
-        <img class="icon-right" :src="images[1]" alt="">
+        
     </div>
 </template>
 
@@ -69,40 +74,51 @@
         right: 0;
         top: 50%;
         transform: translateY(-50%);
-        width: 55%;
-        &>div{
-            width: 100%;
+        width: 54%;
+        .text-b,.text-c,.text-d{
+            width: 89%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 13px;
         }
-        .text-a{
-            font-weight: bold;
-        }
+
         .text-c{
             color:@darkOrange;
-            margin:8px 0 3px;
+            font-weight: bold;
+            margin:0px 0 5px;
         }
-        .text-b,.text-d{
+        .text-d{
             font-size: 12px;
             color:@darkerGray;
         }
-        .text-b{
-            margin:3px 0 0px;
+        .text-e{
+            margin:20px 0 0px;
+            position: relative;
+            .icon-right{
+                position: absolute;
+                bottom: 50%;
+                transform: translateY(50%);
+                right: 3%;
+                width: 6%;
+            }
+        }
+        .text-f{
+            position: relative;
+            .text-b{
+                font-weight: bold;
+                color: @darkerGray;
+                font-size: 12px;
+            }
+            .status{
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 2%;
+                width: 9%;
+            }
         }
     }
-    .icon-right{
-        position: absolute;
-        bottom: 8%;
-        right: 3%;
-        width: 3.5%;
-    }
-    .status{
-        position: absolute;
-        top: 8%;
-        right: 3%;
-        width: 5%;
-    }
+    
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
     <div id="probation">
-        <img :src="images[0]" alt="">
+        <!-- <img :src="images[0]" alt=""> -->
+        <Banner :images="banners"></Banner>
         <div class="tip">
-            <img :src="images[1]" alt="">
+            <img :src="images[0]" alt="">
         </div>
         <ClassItem :data="content"></ClassItem>
         <WhisperItme :data="content"></WhisperItme>
@@ -12,18 +13,25 @@
 <script>
     import ClassItem from "@components/ParentChildReading/ClassItem"
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
+    import Banner from "@components/shop/Banner"
 
     import { wxShareOptions } from "@common"
       
     export default {
         components:{
-            ClassItem,WhisperItme
+            ClassItem,WhisperItme,Banner
         },
         computed:{
             images(){
                 return [
-                    require("@image/ParentChildReading/pic_banner.png"),
                     require("@image/ParentChildReading/pic_txt.png"),
+                ]
+            },
+            banners(){
+                return [
+                    {src:require("@image/ParentChildReading/free_banner_01.jpg")},
+                    {src:require("@image/ParentChildReading/free_banner_02.jpg")},
+                    {src:require("@image/ParentChildReading/free_banner_03.jpg")},
                 ]
             },
             content(){
@@ -37,7 +45,7 @@
                     "clazzIndex":3,
                     "readWordsCount":231,
                     "coverUrl":"http://mytianimg.oss-cn-shanghai.aliyuncs.com/1520406286341.png",
-                    "expertImgUrl":"http://mytianimg.oss-cn-shanghai.aliyuncs.com/1520417361507.png",
+                    "expertImgUrl":"http://mytianimg.oss-cn-shanghai.aliyuncs.com/1520849681061.png",
                     "readIsFree":1,
                     "clazzType":"YC",
                     "expertHonor":"教授",
