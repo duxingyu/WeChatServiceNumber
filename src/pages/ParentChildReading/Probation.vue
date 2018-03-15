@@ -7,6 +7,7 @@
         </div>
         <ClassItem :data="content"></ClassItem>
         <WhisperItme :data="content"></WhisperItme>
+        <BuyBtn></BuyBtn>
     </div>
 </template>
 
@@ -14,12 +15,13 @@
     import ClassItem from "@components/ParentChildReading/ClassItem"
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
     import Banner from "@components/shop/Banner"
+    import BuyBtn from "@components/ParentChildReading/BuyBtn"
 
     import { wxShareOptions } from "@common"
       
     export default {
         components:{
-            ClassItem,WhisperItme,Banner
+            ClassItem,WhisperItme,Banner,BuyBtn
         },
         computed:{
             images(){

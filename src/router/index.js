@@ -275,7 +275,11 @@ const router = new Router({
                 //
                 {
                     path: "/",
-                    component: Probation
+                    component: Probation,
+                    beforeEnter(to, from, next) {
+                        document.title = "阅读试听"
+                        next()
+                    },
                 },
                 {
                     path: "push",
@@ -285,17 +289,16 @@ const router = new Router({
                     path: "buy",
                     component: ReadingBuy
                 },
+                {
+                    path: "share",
+                    component: ReadingSharePage,
+                    beforeEnter(to, from, next) {
+                        document.title = "亲子阅读分享"
+                        next()
+                    },
+                }
             ]
         },
-        // 亲子阅读分享
-        {
-            path: "/reading-share",
-            component: ReadingSharePage,
-            beforeEnter(to, from, next) {
-                document.title = "亲子阅读分享"
-                next()
-            },
-        }
     ]
 })
 

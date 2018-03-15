@@ -36,12 +36,8 @@
         },
         computed:{
             ...mapState(["user"]),
-            UserUid(){
-                return this.user.uid
-            }
         },
         methods:{
-            ...mapActions(["isLogin"]),
             init(){
                 this.LoadingShow = true
                 GetAppUsingNum(this.user.uid).then(res =>{
@@ -63,19 +59,12 @@
             }
         },
         beforeMount(){
-            this.isLogin(true).then(res =>{
-                this.init()
-            })
+            this.init()
             this.$nextTick(() =>{
                 let bgImageUrl = require("@image/learnlog/learnlog_background.jpg")
                 this.$refs.learnlog.style.height = window.innerHeight + 'px'
                 this.$refs.learnlog.style.backgroundImage = 'url('+bgImageUrl+')'
             })
-        },
-        watch:{
-            UserUid(){
-                this.init()
-            }
         }
     }
 </script>
