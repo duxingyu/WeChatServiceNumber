@@ -37,6 +37,7 @@
 </template>
 
 <script>
+    import { wxShareOptions } from "@common"
     import { getShareUserReadInfo } from "@interface"
 
     export default {
@@ -62,10 +63,17 @@
             },
         },
         beforeMount(){
+            
+            wxShareOptions({
+                title: "麦田亲子阅读",
+                link: "http://promotion.mytian.com.cn/myt_promotion/center/center_splash.html?returnTo=reading-share&uid=" + this.$route.query.uid,
+                imgUrl: "http://www.mytian.com.cn/myhtml/readbook/images/logo.png",
+                desc: "用心还原孩子的世界",
+            })
+
             let uid = this.$route.query.uid
             if(uid){
                 getShareUserReadInfo(uid).then(res =>{
-                    console.log(res)
                     this.userImg = res.info.userImg
                     this.alias = res.info.alias
                     this.words = res.info.words
@@ -74,6 +82,7 @@
             }else{
                 alert("分享链接错误!")
             }
+            
         }
     }
 </script>

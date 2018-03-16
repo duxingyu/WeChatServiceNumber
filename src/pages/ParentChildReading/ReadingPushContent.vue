@@ -1,5 +1,5 @@
 <template>
-    <div id="reading-push-content" :style="wH">
+    <div id="reading-push-content" ref="reading-push-content" :style="wH">
         <div class="banner">
             <img :src="currentPush && currentPush.bannerUrl?currentPush.bannerUrl:images[0]" alt="">
             <img class="banner-list" v-if="currentPush && currentPush.bannerUrl && isBuy" :src="currentPush.bannerUrl" alt="">
@@ -53,6 +53,7 @@
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
     import Loading from "@components/Loading"
 
+    import { wxShareOptions } from "@common"
     import { getUserPayInfo } from "@interface"
     import { getReadListByWeek } from "@interface"
     import { parseTime } from "@common"
@@ -175,7 +176,7 @@
                         this.$nextTick((res) =>{
                             let h = this.$refs["time-select"].offsetHeight
                             if(h){
-                                this.$refs["reading-push"].style.paddingBottom = h + "px"
+                                this.$refs["reading-push-content"].style.paddingBottom = h + "px"
                             }
                             
                         })
@@ -269,6 +270,14 @@
         },
         beforeMount(){
             this.init()
+            localStorage.wxUserInfo = JSON.stringify(this.user)
+
+            wxShareOptions({
+                title: "麦田亲子阅读",
+                link: "http://promotion.mytian.com.cn/myt_promotion/center/center_splash.html?returnTo=reading-share&uid=" + this.user.uid,
+                imgUrl: "http://www.mytian.com.cn/myhtml/readbook/images/logo.png",
+                desc: "用心还原孩子的世界",
+            })
         }
     }
 </script>

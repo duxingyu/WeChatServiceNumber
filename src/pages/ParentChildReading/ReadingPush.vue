@@ -13,6 +13,7 @@
 <script>
     import GoodsDetail from "@components/ParentChildReading/GoodsDetail"
     import ReadingPushContent from "./ReadingPushContent"
+    import { wxShareOptions } from "@common"
     import { mapState } from "vuex"
     import { mapMutations } from "vuex"
 
@@ -32,6 +33,13 @@
             ...mapMutations(["setBindPageShow"]),
         },
         beforeMount(){
+            wxShareOptions({
+                title: "麦田亲子阅读",
+                link: "http://promotion.mytian.com.cn/myt_promotion/center/center_splash.html?returnTo=reading-push",
+                imgUrl: "http://www.mytian.com.cn/myhtml/readbook/images/logo.png",
+                desc: "用心还原孩子的世界",
+            })
+
             if(this.user.isLogin){
                 this.isShow = true
             }
