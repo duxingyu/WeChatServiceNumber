@@ -69,7 +69,7 @@
                 loadingShow:false,
                 isBuy:false,
                 days:[],
-                currnetIndex:0,
+                currnetIndex:4,
                 pushList:[],
                 currentPush:null,
                 week:0,

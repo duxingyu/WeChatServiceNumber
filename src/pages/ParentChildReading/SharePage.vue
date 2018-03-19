@@ -14,24 +14,8 @@
                 {{words}} <span>字</span>
             </div>
         </div>
-        <div class="proposal">
-            <p>孩⼦不听话？</p>
-            <p>亦或不肯好好交流？</p>
-            <p>。。。</p>
-            <p>如何既不惩罚也不姑息地引领孩⼦的成长？</p>
-            <p>。。。</p>
-            <p>麦⽥亲⼦阅读将带你读懂孩⼦的内⼼，</p>
-            <p>跟孩⼦建⽴舒服的关系</p>
-            <p>⽽不是对抗，重拾温暖亲⼦时光！</p>
-        </div>
-        <div class="qrcode">
-            <div class="des">
-                <div>长按二维码图片</div>
-                <p>参与麦田亲子互动</p>
-            </div>
-            <div class="code">
-                <img :src="images[3]" alt="">
-            </div>
+        <div class="btn" @click="toProbation">
+            <img :src="images[3]" alt="">
         </div>
     </div>
 </template>
@@ -55,12 +39,17 @@
                     require("@image/ParentChildReading/bg_title_read_day.png"),
                     require("@image/shop/touxiang01.png"),
                     require("@image/ParentChildReading/frame_read_day.png"),
-                    require("@image/ParentChildReading/qrcode.png"),
+                    require("@image/ParentChildReading/button.png"),
                 ]
             },
             style(){
                 return "height:" + window.innerHeight + "px;"
             },
+        },
+        methods:{
+            toProbation(){
+                this.$router.push({path:"/reading"})
+            }
         },
         beforeMount(){
             
@@ -96,8 +85,7 @@
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size:100%;
-    box-sizing: border-box;
-    padding-bottom: 100px;
+    position: relative;
     .touxiang{
         position: relative;
         .img-touxiang{
@@ -152,43 +140,11 @@
             }
         }
     }
-    .proposal{
-        padding-top: 10px;
-        p{
-            text-align: center;
-            margin: 5px 0;
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-    }
-    .qrcode{
-        position: fixed;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        justify-content: space-around;
-        padding:10px 0;
-        background: rgba(255, 255, 255, .8);
-        img{
-            width: 80px;
-        }
-        .des{
-            text-align: center;
-            white-space: nowrap;
-            font-weight: bold;
-            letter-spacing: 2px;
-            div{
-                color:@blue1;
-            }
-            p{
-                color:@darkOrange;
-                font-size: 20px;
-                margin-top:5px;
-            }
-        }
+    .btn{
+        position: absolute;  
+        bottom: 3%;
+        width: 50%;
+        left: 25%;  
     }
 }
 </style>

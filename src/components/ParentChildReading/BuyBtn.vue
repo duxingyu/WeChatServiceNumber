@@ -1,10 +1,15 @@
 <template>
     <div class="bottom" @click="buy" ref="buy-btn">
-        <img :src="btnImage" alt="">
-        <div class="price">
-            {{title}}: ￥ <span>{{price / 100}}</span>
+        <div v-if="!isFree">
+            <img :src="btnImage[0]" alt="">
+            <div class="price">
+                {{title}}: ￥ <span>{{price / 100}}</span>
+            </div>
+            <Loading type="1" v-if="loadingShow"></Loading>
         </div>
-        <Loading type="1" v-if="loadingShow"></Loading>
+        <div v-else>
+            <img :src="btnImage[1]" alt="">
+        </div>
     </div>
 </template>
 
@@ -27,19 +32,23 @@
                 loadingShow:false,
                 title:"",
                 goodId:"",
-                price:0
+                price:0,
+                isFree:true
             }
         },
         computed:{
             ...mapState(["userOpenId","user"]),
             btnImage(){
-                return  require("@image/ParentChildReading/buy.png")
+                return  [
+                    require("@image/ParentChildReading/buy.png"),
+                    require("@image/ParentChildReading/enroll.png"),
+                ]
             }
         },
         methods:{
             ...mapActions(["isLogin"]),
             buy(){
-                if(this.$route.path == "/reading"){
+                if(this.$route.path == "/reading" ||　this.$route.path == "/reading/"){
                     this.$router.push({path:"/reading/buy"})
                     return
                 }
@@ -77,6 +86,11 @@
                 this.price = res.list[0].price
             })
             
+            if(this.$route.path == "/reading" || this.$route.path == "/reading/"){
+                this.isFree = true
+            }else{
+                this.isFree = false
+            }
         },
         mounted(){
             this.$nextTick((res) =>{

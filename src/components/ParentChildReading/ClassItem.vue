@@ -101,6 +101,8 @@
                 transform: translateY(50%);
                 right: 3%;
                 width: 6%;
+                -webkit-animation: slideRight 1s linear infinite;
+                animation: slideRight 1s linear infinite;
             }
         }
         .text-f{
@@ -119,6 +121,15 @@
             }
         }
     }
-    
+}
+@-webkit-keyframes slideRight{
+    0%{
+        -webkit-transform: translate(-100%,50%);
+    }
+}
+@keyframes slideRight{
+    0%{
+        transform: translate(-100%,50%);
+    }
 }
 </style>

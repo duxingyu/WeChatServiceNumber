@@ -86,12 +86,26 @@
         transform: translateY(50%);
         right: 1.5%;
         width: 3.35%;
+        -webkit-animation: slideRight 1s linear infinite;
+        animation: slideRight 1s linear infinite;
     }
     .status{
         position: absolute;
         top: 8%;
         right: 1.1%;
         width: 5%;
+    }
+}
+
+@-webkit-keyframes slideRight{
+    0%{
+        -webkit-transform: translate(-100%,50%);
+    }
+}
+
+@keyframes slideRight{
+    0%{
+        transform: translate(-100%,50%);
     }
 }
 </style>
