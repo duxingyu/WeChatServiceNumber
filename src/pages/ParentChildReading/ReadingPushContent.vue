@@ -247,16 +247,6 @@
                 this.$router.push({path:"/reading/buy"})
             },
             init(){
-                this.year = new Date().getFullYear()
-                this.week = this.getWeek(new Date())
-                this.maxWeek = this.getMaxWeek(this.year)
-                if(this.week > this.maxWeek){
-                    this.year++
-                    this.week = 1
-                    this.maxWeek = this.getMaxWeek(this.year)
-                }
-                this.today = parseTime(new Date(), true).split(" ")[0]
-
                 this.getUserPayInfo()
                 this.getReadListByWeek((res) =>{
                     for(let i = 0; i < res.days.length; i++){
@@ -269,6 +259,24 @@
             }
         },
         beforeMount(){
+            let day = this.$route.query.day
+            if(day && /^[0-9]+\-[0-9]+\-[0-9]+$/.test(day)){
+                this.year  = parseInt(day.split("-")[0])
+                this.week = this.getWeek(new Date(day))
+                this.today = day
+            }else{
+                this.year = new Date().getFullYear()
+                this.week = this.getWeek(new Date())
+                this.today = parseTime(new Date(), true).split(" ")[0]
+            }
+
+            this.maxWeek = this.getMaxWeek(this.year)
+            if(this.week > this.maxWeek){
+                this.year++
+                this.week = 1
+                this.maxWeek = this.getMaxWeek(this.year)
+            }
+
             this.init()
             localStorage.wxUserInfo = JSON.stringify(this.user)
 
