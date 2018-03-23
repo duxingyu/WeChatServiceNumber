@@ -78,6 +78,13 @@
             }
         },
         beforeMount(){
+            if(this.$route.path == "/reading" || this.$route.path == "/reading/"){
+                this.isFree = true
+                return
+            }else{
+                this.isFree = false
+            }
+
             this.loadingShow = true
             getWxReadGoodList().then(res =>{
                 this.loadingShow = false
@@ -86,11 +93,7 @@
                 this.price = res.list[0].price
             })
             
-            if(this.$route.path == "/reading" || this.$route.path == "/reading/"){
-                this.isFree = true
-            }else{
-                this.isFree = false
-            }
+            
         },
         mounted(){
             this.$nextTick((res) =>{

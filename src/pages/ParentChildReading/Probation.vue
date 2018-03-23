@@ -16,8 +16,6 @@
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
     import Banner from "@components/shop/Banner"
     import BuyBtn from "@components/ParentChildReading/BuyBtn"
-
-    import { wxShareOptions } from "@common"
       
     export default {
         components:{
@@ -58,17 +56,10 @@
                     "expertRemark":"test",
                     "whisperTitle":"悄悄话",
                     "time":"",
-                    "readUrl":"http://www.mytian.com.cn/myhtml/readbook/lesson3_free/index.html"}
+                    "readUrl":"http://www.mytian.com.cn/myhtml/readbook/lesson3_free/index.html"
                 }
+            }
         },
-        beforeMount(){
-            wxShareOptions({
-                title: "麦田亲子阅读",
-                link: "http://promotion.mytian.com.cn/myt_promotion/center/center_splash.html?returnTo=reading-free",
-                imgUrl: "http://www.mytian.com.cn/myhtml/readbook/images/logo.png",
-                desc: "用心还原孩子的世界",
-            })
-        }
     }
 </script>
 

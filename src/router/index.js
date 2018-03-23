@@ -40,6 +40,7 @@ import Probation from "@pages/ParentChildReading/Probation"
 import ReadingPush from "@pages/ParentChildReading/ReadingPush"
 import ReadingBuy from "@pages/ParentChildReading/Buy"
 import ReadingSharePage from "@pages/ParentChildReading/SharePage"
+import ReadingReport from "@pages/ParentChildReading/Report"
 
 const router = new Router({
     routes: [
@@ -296,6 +297,10 @@ const router = new Router({
                         document.title = "亲子阅读分享"
                         next()
                     },
+                },
+                {
+                    path: "report",
+                    component: ReadingReport,
                 }
             ]
         },
