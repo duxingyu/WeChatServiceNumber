@@ -58,6 +58,7 @@
     import { getReadListByWeek } from "@interface"
     import { parseTime } from "@common"
     import { mapState } from "vuex"
+    import { mapMutations } from "vuex"
     
     export default {
         components:{
@@ -95,6 +96,7 @@
             }
         },
         methods:{
+            ...mapMutations(["setReadingFreeToBuy"]),
             getWeek(date){
                 var date2 = new Date(date.getFullYear(), 0, 1);  
                 var day1 = date.getDay();  
@@ -244,6 +246,7 @@
                 this.currentPush =  null
             },
             toBuy(){
+                this.setReadingFreeToBuy(true)
                 this.$router.push({path:"/reading/buy"})
             },
             init(){
