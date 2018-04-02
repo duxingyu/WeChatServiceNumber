@@ -1,10 +1,10 @@
 export let url = {
-    domain: '/api',
-    domain2: '/log',
+    // domain: '/api',
+    // domain2: '/log',
     // domain: 'http://10.0.1.26',
     // domain2: 'http://10.0.1.26',
-    // domain: 'http://www.mytian.com.cn',
-    // domain2: 'http://114.215.220.162:9999',
+    domain: 'http://www.mytian.com.cn',
+    domain2: 'http://114.215.220.162:9999',
     user() {
         return {
             wxShareSignInfo: this.domain + '/myt_wx/wxShareAction_getWxShareSignInfo.do',
@@ -44,6 +44,7 @@ export let url = {
             readListByWeek: this.domain + '/myt_wx/wxReadAction_getReadListByWeek.do',
             shareUserReadInfo: this.domain + '/myt_wx/wxReadAction_getShareUserReadInfo.do',
             wxReadGoodList: this.domain + '/myt_order/marketGoodAction_getWxReadGoodList.do',
+            updateUserAction: this.domain + '/myt_activity/appAction_updateUserAction.do',
         }
     },
     pay() {

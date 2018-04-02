@@ -17,10 +17,12 @@
     import Loading from "@components/Loading"
 
     import { mapState } from "vuex"
+    import { mapMutations } from "vuex"
     import { mapActions } from "vuex"
     import { buyKernel } from '@interface'
     import { callWxJsPay } from '@interface'
     import { getWxReadGoodList } from '@interface'
+    import { updateUserAction } from '@interface'
     import { logoutMessage } from '@common'
 
     export default {
@@ -37,7 +39,7 @@
             }
         },
         computed:{
-            ...mapState(["userOpenId","user"]),
+            ...mapState(["userOpenId","user","readingFreeToBuy"]),
             btnImage(){
                 return  [
                     require("@image/ParentChildReading/buy.png"),
@@ -46,9 +48,11 @@
             }
         },
         methods:{
+            ...mapMutations(["setReadingFreeToBuy"]),
             ...mapActions(["isLogin"]),
             buy(){
                 if(this.$route.path == "/reading" ||　this.$route.path == "/reading/"){
+                    this.setReadingFreeToBuy(true)
                     this.$router.push({path:"/reading/buy"})
                     return
                 }
@@ -67,6 +71,15 @@
                     this.loadingShow = false
                     if (res.result == 1) {
                         callWxJsPay(res.orderInfo,() =>{
+                            let option = {}
+                            option.uid = this.user.uid
+                            option.token = this.user.token
+                            if(this.readingFreeToBuy){
+                                option.actionId = 16
+                            }else{
+                                option.actionId = 17
+                            }
+                            updateUserAction(option)
                             this.$router.replace({path: "/reading/push"})
                         })
                     } else if (res.result == -1) {
@@ -92,7 +105,6 @@
                 this.goodId = res.list[0].goodId
                 this.price = res.list[0].price
             })
-            
             
         },
         mounted(){

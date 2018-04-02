@@ -58,7 +58,9 @@ let state = {
     StudyDayReportDetailParames: {},
     StudyMonthlyReportDetailParames: {},
     //课程介绍
-    CourseIntrInfo: {}
+    CourseIntrInfo: {},
+    //亲子阅读
+    readingFreeToBuy: false,
 }
 
 let mutations = {
@@ -99,6 +101,9 @@ let mutations = {
     },
     SetCourseIntrInfo(state, info) {
         state.CourseIntrInfo = info
+    },
+    setReadingFreeToBuy(state, info) {
+        state.readingFreeToBuy = info
     }
 }
 

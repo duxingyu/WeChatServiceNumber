@@ -884,3 +884,28 @@ export async function getWxReadGoodList() { //亲子阅读推送
         })
     })
 }
+
+
+export async function updateUserAction(data) { //上传用户行为
+    let options = CopyObject(requestOptions)
+    options.uid = data.uid
+    options.token = data.token
+    options.actionId = data.actionId
+    return new Promise((resolve, reject) => {
+        request({
+            type: "post",
+            url: requestUserUrl.updateUserAction,
+            data: options,
+            success(data) {
+                if (data.result == 1) {
+                    resolve(data)
+                    return
+                } else {
+                    logoutMessage(data.description)
+                    console.log(data.description)
+                }
+                loadingImage()
+            }
+        })
+    })
+}
