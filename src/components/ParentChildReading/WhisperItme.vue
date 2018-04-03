@@ -17,9 +17,13 @@
 </template>
 
 <script>
+    import { mapState } from "vuex"
+    import { updateUserAction } from "@interface"
+
     export default {
         props:["data"],
         computed:{
+            ...mapState(["user"]),
             images(){
                 return [
                     require("@image/ParentChildReading/pic_list_expert.png"),
@@ -36,7 +40,17 @@
         },
         methods:{
             toWhisper(){
-                location.href = this.data.whisperUrl
+                if(this.user.isLogin){
+                    let option = {}
+                    option.uid = this.user.uid
+                    option.token = this.user.token
+                    option.actionId = 19
+                    updateUserAction(option).then(res =>{
+                        location.href = this.data.readUrl
+                    })
+                }else{
+                    location.href = this.data.whisperUrl
+                }
             }
         }
     }
