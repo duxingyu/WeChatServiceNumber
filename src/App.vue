@@ -67,11 +67,13 @@
       },
     },
     beforeMount() {
-      if(isWeiXin() && this.userOpenId){
+      let whereFrom = this.$route.query.whereFrom
+      if((isWeiXin() && this.userOpenId) || whereFrom == "app"){
         this.init()
       }else{
-        alert("请在服务号中打开本页面!")
+        alert("请在服务号中打开")
       }
+      
     }
   };
 </script>

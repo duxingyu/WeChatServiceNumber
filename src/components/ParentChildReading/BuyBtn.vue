@@ -1,6 +1,6 @@
 <template>
     <div class="bottom" @click="buy" ref="buy-btn">
-        <div v-if="!isFree">
+        <div v-if="!isFreePage && isWx">
             <img :src="btnImage[0]" alt="">
             <div class="price">
                 {{title}}: ￥ <span>{{price / 100}}</span>
@@ -9,6 +9,10 @@
         </div>
         <div v-else>
             <img :src="btnImage[1]" alt="">
+        </div>
+        <div class="code" v-if="codeIsShow">
+            <div @click.stop="closeCode"></div>
+            <img :src="btnImage[2]" alt="">
         </div>
     </div>
 </template>
@@ -24,6 +28,7 @@
     import { getWxReadGoodList } from '@interface'
     import { updateUserAction } from '@interface'
     import { logoutMessage } from '@common'
+    import { isWeiXin } from "@common";
 
     export default {
         components:{
@@ -35,7 +40,9 @@
                 title:"",
                 goodId:"",
                 price:0,
-                isFree:true
+                isFreePage:true,
+                isWx:false,
+                codeIsShow:false
             }
         },
         computed:{
@@ -44,18 +51,28 @@
                 return  [
                     require("@image/ParentChildReading/buy.png"),
                     require("@image/ParentChildReading/enroll.png"),
+                    require("@image/ParentChildReading/pop_code.png"),
                 ]
-            }
+            },
         },
         methods:{
             ...mapMutations(["setReadingFreeToBuy"]),
             ...mapActions(["isLogin"]),
+            closeCode(){
+                this.codeIsShow = false
+            },
             buy(){
-                if(this.$route.path == "/reading" ||　this.$route.path == "/reading/"){
+                if(this.isFreePage){
                     this.setReadingFreeToBuy(true)
                     this.$router.push({path:"/reading/buy"})
                     return
                 }
+
+                if(!this.isWx){
+                    this.codeIsShow = true
+                    return 
+                }
+
                 this.isLogin().then(res =>{
                     this.pay()
                 })
@@ -88,14 +105,16 @@
                         logoutMessage(res.description)
                     }
                 })
-            }
+            },
         },
         beforeMount(){
+            this.isWx = isWeiXin()
+
             if(this.$route.path == "/reading" || this.$route.path == "/reading/"){
-                this.isFree = true
+                this.isFreePage = true
                 return
             }else{
-                this.isFree = false
+                this.isFreePage = false
             }
 
             this.loadingShow = true
@@ -110,6 +129,9 @@
         mounted(){
             this.$nextTick((res) =>{
                 let h = this.$refs["buy-btn"].offsetHeight
+                if(this.isFreePage){
+                    h += 10
+                }
                 this.$parent.$el.style.paddingBottom = h + "px"
             })
         },
@@ -127,6 +149,7 @@
         position: fixed;
         width: 100%;
         bottom:0%;
+        z-index: 99;
         .price{
             position: absolute;
             bottom: 5%;
@@ -136,6 +159,28 @@
             font-size: 3.2vw;
             span{
                 font-size: 20px;
+            }
+        }
+        .code{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            div{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, .7);
+                top: 0;
+                left: 0;
+            }
+            img{
+                position: absolute;
+                width: 80%;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
             }
         }
     }

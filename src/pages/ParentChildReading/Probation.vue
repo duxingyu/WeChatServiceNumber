@@ -16,6 +16,7 @@
     import WhisperItme from "@components/ParentChildReading/WhisperItme"
     import Banner from "@components/shop/Banner"
     import BuyBtn from "@components/ParentChildReading/BuyBtn"
+    import { isWeiXin } from "@common";
       
     export default {
         components:{
@@ -35,6 +36,13 @@
                 ]
             },
             content(){
+                let readUrl = "http://www.mytian.com.cn/myhtml/readbook/lesson3_free/index.html"
+                let whisperUrl = "http://www.mytian.com.cn/myhtml/parents_whisper/lesson3_free/index.html"
+                if(isWeiXin){
+                    readUrl = "http://www.mytian.com.cn/myhtml/readbook_app/lesson3_free/index.html"
+                    whisperUrl = "http://www.mytian.com.cn/myhtml/parents_whisper_app/lesson3_free/index.html"
+                }
+                
                 return{
                     "readStatus":0,
                     "readTitle":"{内测}麦田亲子阅读— “用心还原孩子的世界” （儿童成长敏感叛逆期）",
@@ -51,12 +59,12 @@
                     "expertHonor":"教授",
                     "whisperContent":"专家内容解读",
                     "expertTitle":"麦田首席测试",
-                    "whisperUrl":"http://www.mytian.com.cn/myhtml/parents_whisper/lesson3_free/index.html",
+                    "whisperUrl":whisperUrl,
                     "clazzId":31003,
                     "expertRemark":"test",
                     "whisperTitle":"悄悄话",
                     "time":"",
-                    "readUrl":"http://www.mytian.com.cn/myhtml/readbook/lesson3_free/index.html"
+                    "readUrl": readUrl
                 }
             }
         },
