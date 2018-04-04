@@ -1,7 +1,7 @@
 <template>
     <div id='my'>
         <div class="info">
-            <img :src="user.wxHeadImg?user.wxHeadImg:'../../assets/images/shop/touxiang01.png'">
+            <img :src="user.wxHeadImg?user.wxHeadImg:txImage">
             <div class="num">
                 <div class="alias">
                     <span>{{user.wxAlias ? user.wxAlias : '麦麦'}}</span>
@@ -39,6 +39,9 @@
     export default {
         computed: {
             ...mapState(['user',"userOpenId"]),
+            txImage(){
+                return require("@image/shop/touxiang01.png")
+            }
         },
         components: {
             Lists
