@@ -40,13 +40,13 @@
         },
         methods:{
             toWhisper(){
-                if(this.user.isLogin){
+                if(this.user.isLogin && this.data.readIsFree){
                     let option = {}
                     option.uid = this.user.uid
                     option.token = this.user.token
                     option.actionId = 19
                     updateUserAction(option).then(res =>{
-                        location.href = this.data.readUrl
+                        location.href = this.data.whisperUrl
                     })
                 }else{
                     location.href = this.data.whisperUrl

@@ -51,7 +51,7 @@
         },
         methods:{
             toRead(){
-                if(this.user.isLogin){
+                if(this.user.isLogin && this.data.readIsFree){
                     let option = {}
                     option.uid = this.user.uid
                     option.token = this.user.token
