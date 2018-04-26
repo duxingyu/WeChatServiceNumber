@@ -909,3 +909,115 @@ export async function updateUserAction(data) { //上传用户行为
         })
     })
 }
+
+// ParentChildReading/Report  亲子阅读报告
+
+export async function minuteDetails(data) { //陪伴孩子多长时间
+  let options = CopyObject(requestOptions)
+  options.uid = data.uid
+  options.week = data.week
+  return new Promise((resolve, reject) => {
+      request({
+          url: requestUserUrl.minuteDetails,
+          data: options,
+          success(data) {
+              if (data.result == 1) {
+                  resolve(data)
+                  return
+              } else {
+                  logoutMessage(data.description)
+                  console.log(data.description)
+              }
+              loadingImage()
+          }
+      })
+  })
+}
+
+export async function daysDetailThisWeek(data) { //连续阅读几天以及超过百分之几的人和分布的百分比
+  let options = CopyObject(requestOptions)
+  options.uid = data.uid
+  options.week = data.week
+  return new Promise((resolve, reject) => {
+      request({
+          url: requestUserUrl.daysDetailThisWeek,
+          data: options,
+          success(data) {
+              if (data.result == 1) {
+                  resolve(data)
+                  return
+              } else {
+                  logoutMessage(data.description)
+                  console.log(data.description)
+              }
+              loadingImage()
+          }
+      })
+  })
+}
+
+export async function getUserReadHistoryThisWeek(data) { //最喜欢的故事以及评分
+  let options = CopyObject(requestOptions)
+  options.uid = data.uid
+  options.week = data.week
+  return new Promise((resolve, reject) => {
+      request({
+          url: requestUserUrl.getUserReadHistoryThisWeek,
+          data: options,
+          success(data) {
+              if (data.result == 1) {
+                  resolve(data)
+                  return
+              } else {
+                  logoutMessage(data.description)
+                  console.log(data.description)
+              }
+              loadingImage()
+          }
+      })
+  })
+}
+
+export async function getMostFavouriteThisWeek(data) { //本周阅读最喜欢什么以及评分
+  let options = CopyObject(requestOptions)
+  options.uid = data.uid
+  options.week = data.week
+  return new Promise((resolve, reject) => {
+      request({
+          url: requestUserUrl.getMostFavouriteThisWeek,
+          data: options,
+          success(data) {
+              if (data.result == 1) {
+                  resolve(data)
+                  return
+              } else {
+                  logoutMessage(data.description)
+                  console.log(data.description)
+              }
+              loadingImage()
+          }
+      })
+  })
+}
+
+export async function getHoursDetailThisWeek(data) { //开始阅读最喜欢开始的时间 以及对应的所有用户的曲线
+  let options = CopyObject(requestOptions)
+  options.uid = data.uid
+  options.week = data.week
+  return new Promise((resolve, reject) => {
+      request({
+          url: requestUserUrl.getHoursDetailThisWeek,
+          data: options,
+          success(data) {
+              if (data.result == 1) {
+                  resolve(data)
+                  return
+              } else {
+                  logoutMessage(data.description)
+                  console.log(data.description)
+              }
+              loadingImage()
+          }
+      })
+  })
+}

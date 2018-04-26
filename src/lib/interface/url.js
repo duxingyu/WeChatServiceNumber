@@ -45,6 +45,13 @@ export let url = {
             shareUserReadInfo: this.domain + '/myt_wx/wxReadAction_getShareUserReadInfo.do',
             wxReadGoodList: this.domain + '/myt_order/marketGoodAction_getWxReadGoodList.do',
             updateUserAction: this.domain + '/myt_activity/appAction_updateUserAction.do',
+            minuteDetails: this.domain + '/myt_wx/wxReadAction_getMinuteDetails.do',
+            daysDetailThisWeek: this.domain + '/myt_wx/wxReadAction_getDaysDetailThisWeek.do',
+            // dfd
+            getUserReadHistoryThisWeek: this.domain + '/myt_wx/wxReadAction_getUserReadHistoryThisWeek.do',
+            getMostFavouriteThisWeek: this.domain + '/myt_wx/wxReadAction_getMostFavouriteThisWeek.do',
+            getHoursDetailThisWeek: this.domain + '/myt_wx/wxReadAction_getHoursDetailThisWeek.do',
+
         }
     },
     pay() {

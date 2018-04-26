@@ -205,10 +205,10 @@ export function wxShareOptions(options) {
             // 触发时需要做的事...
         },
         success: function() {
-            // alert('分享到朋友圈成功'); 
+            // alert('分享到朋友圈成功');
         },
         cancel: function() {
-            // alert('你没有分享到朋友圈');  
+            // alert('你没有分享到朋友圈');
         },
         fail: function(res) {
             //这里必须写，可以再非微信端弹出错误信息，方便调试
@@ -226,10 +226,31 @@ export function wxShareOptions(options) {
             //alert('分享给朋友成功');
         },
         cancel: function(res) {
-            //alert('你没有分享给朋友');  
+            //alert('你没有分享给朋友');
         },
         fail: function(res) {
             //这里必须写，可以再非微信端弹出错误信息，方便调试
         }
     });
+}
+
+// 数字转为汉字
+export function numToWord(num, seven) {
+  switch (num) {
+    case 0: num = '一';
+      break;
+    case 1: num = '二';
+      break;
+    case 2: num = '三';
+      break;
+    case 3: num = '四';
+      break;
+    case 4: num = '五';
+      break;
+    case 5: num = '六';
+      break;
+    default: num = seven ? seven : '日';
+      break;
+  }
+  return num;
 }
